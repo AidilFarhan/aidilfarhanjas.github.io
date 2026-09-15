@@ -278,6 +278,34 @@
     </div>
   </div>
 </footer>
+<script>
+(function () {
+  const resume = document.querySelector(
+    'a[href^="data:application/pdf;base64,"]'
+  );
 
+  if (!resume) return;
+
+  try {
+    const base64 = resume.getAttribute('href').split(',')[1];
+    const binary = atob(base64);
+    const bytes = new Uint8Array(binary.length);
+
+    for (let i = 0; i < binary.length; i++) {
+      bytes[i] = binary.charCodeAt(i);
+    }
+
+    const pdf = new Blob([bytes], {
+      type: 'application/pdf'
+    });
+
+    resume.href = URL.createObjectURL(pdf);
+    resume.removeAttribute('download');
+    resume.setAttribute('target', '_self');
+  } catch (error) {
+    console.error('Unable to prepare the embedded resume:', error);
+  }
+})();
+</script>
 </body>
 </html>
