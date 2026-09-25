@@ -466,15 +466,24 @@
     /* SVG Schematic Flow */
     .pipeline-svg-wrap {
       width: 100%;
-      overflow-x: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       padding: 6px 0;
     }
 
-    .pipeline-svg-wrap svg {
+    .pipeline-svg-desktop {
       display: block;
       width: 100%;
-      min-width: 580px;
-      height: 94px;
+      max-width: 600px;
+      height: auto;
+    }
+
+    .pipeline-svg-mobile {
+      display: none;
+      width: 100%;
+      max-width: 340px;
+      height: auto;
     }
 
     /* Component Architecture Tabs */
@@ -1270,6 +1279,38 @@
       .impact-metrics-row { grid-template-columns: 1fr; gap: 12px; }
     }
 
+    @media (max-width: 640px) {
+      .flow-diagram-container {
+        padding: 16px 14px;
+        margin: 20px 0 18px;
+      }
+      .flow-diagram-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+      .flow-diagram-title {
+        font-size: 11px;
+        letter-spacing: 0.02em;
+      }
+      .pipeline-svg-desktop {
+        display: none !important;
+      }
+      .pipeline-svg-mobile {
+        display: block !important;
+      }
+      .arch-tabs-nav {
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .arch-tab-btn {
+        font-size: 12.5px;
+        padding: 6px 12px;
+        min-height: 40px;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
@@ -1376,7 +1417,8 @@
           </div>
 
           <div class="pipeline-svg-wrap">
-            <svg viewBox="0 0 680 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Desktop Layout (>= 641px) -->
+            <svg class="pipeline-svg-desktop" viewBox="0 0 600 90" fill="none" xmlns="http://www.w3.org/2000/svg">
               <!-- Connecting Paths -->
               <path d="M120 45 L 230 45" stroke="rgba(217, 196, 143, 0.35)" stroke-width="2" stroke-dasharray="4 4" />
               <path d="M350 45 L 460 25" stroke="rgba(217, 196, 143, 0.35)" stroke-width="2" stroke-dasharray="4 4" />
@@ -1412,6 +1454,45 @@
               <rect x="460" y="48" width="130" height="38" rx="3" fill="#16233F" stroke="rgba(217,196,143,0.4)" stroke-width="1.5"/>
               <text x="525" y="67" fill="#F8F5ED" font-size="10.5" font-family="'IBM Plex Mono', monospace" text-anchor="middle">RekodJa Web App</text>
               <text x="525" y="79" fill="#8F98AE" font-size="8.5" font-family="'IBM Plex Mono', monospace" text-anchor="middle">Gmail Scan &amp; Analytics</text>
+            </svg>
+
+            <!-- Mobile Layout (<= 640px) -->
+            <svg class="pipeline-svg-mobile" viewBox="0 0 340 222" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Connecting Paths -->
+              <path d="M 170 52 L 170 86" stroke="rgba(217, 196, 143, 0.4)" stroke-width="2" stroke-dasharray="3 3" />
+              <path d="M 170 132 C 170 148, 86 148, 86 164" stroke="rgba(217, 196, 143, 0.4)" stroke-width="2" stroke-dasharray="3 3" />
+              <path d="M 170 132 C 170 148, 254 148, 254 164" stroke="rgba(217, 196, 143, 0.4)" stroke-width="2" stroke-dasharray="3 3" />
+
+              <!-- Animated Data Pulse Packets -->
+              <circle r="3.5" fill="#D9C48F">
+                <animateMotion path="M 170 52 L 170 86" dur="1.8s" repeatCount="indefinite" />
+              </circle>
+              <circle r="3.5" fill="#D9C48F">
+                <animateMotion path="M 170 132 C 170 148, 86 148, 86 164" dur="2.2s" begin="0.8s" repeatCount="indefinite" />
+              </circle>
+              <circle r="3.5" fill="#D9C48F">
+                <animateMotion path="M 170 132 C 170 148, 254 148, 254 164" dur="2.2s" begin="0.8s" repeatCount="indefinite" />
+              </circle>
+
+              <!-- Node 1: Job Listing -->
+              <rect x="95" y="10" width="150" height="42" rx="4" fill="#16233F" stroke="rgba(217,196,143,0.5)" stroke-width="1.5"/>
+              <text x="170" y="27" fill="#F8F5ED" font-size="11.5" font-family="'IBM Plex Mono', monospace" text-anchor="middle" font-weight="500">Job Listing</text>
+              <text x="170" y="42" fill="#A9AEC0" font-size="9.5" font-family="'IBM Plex Mono', monospace" text-anchor="middle">DOM Target</text>
+
+              <!-- Node 2: RekodJa Ext -->
+              <rect x="90" y="86" width="160" height="46" rx="4" fill="#223254" stroke="#D9C48F" stroke-width="1.8"/>
+              <text x="170" y="106" fill="#F8F5ED" font-size="12" font-family="'IBM Plex Mono', monospace" text-anchor="middle" font-weight="600">RekodJa Ext</text>
+              <text x="170" y="122" fill="#D9C48F" font-size="9.5" font-family="'IBM Plex Mono', monospace" text-anchor="middle">DOM Scraper</text>
+
+              <!-- Node 3: Google Sheets -->
+              <rect x="10" y="164" width="152" height="48" rx="4" fill="#16233F" stroke="rgba(217,196,143,0.4)" stroke-width="1.5"/>
+              <text x="86" y="184" fill="#F8F5ED" font-size="10.5" font-family="'IBM Plex Mono', monospace" text-anchor="middle" font-weight="500">Google Sheets</text>
+              <text x="86" y="199" fill="#8F98AE" font-size="8.5" font-family="'IBM Plex Mono', monospace" text-anchor="middle">Direct User Cloud</text>
+
+              <!-- Node 4: Web App & DB -->
+              <rect x="178" y="164" width="152" height="48" rx="4" fill="#16233F" stroke="rgba(217,196,143,0.4)" stroke-width="1.5"/>
+              <text x="254" y="184" fill="#F8F5ED" font-size="10.5" font-family="'IBM Plex Mono', monospace" text-anchor="middle" font-weight="500">RekodJa Web App</text>
+              <text x="254" y="199" fill="#8F98AE" font-size="8.5" font-family="'IBM Plex Mono', monospace" text-anchor="middle">Gmail &amp; Analytics</text>
             </svg>
           </div>
         </div>
